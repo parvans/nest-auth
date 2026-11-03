@@ -23,6 +23,7 @@ import express from 'express';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import type { User } from 'src/db/schema';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -96,9 +97,15 @@ export class AuthController {
 
   @Public()
   @Post('forgot-password') // /api/auth/forgot-password
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Request password reset email' })
   async forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto.email);
+  }
+
+  @Post('reset-password') // /api/auth/reset-password
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reset password using token' })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto.token, dto.password);
   }
 }

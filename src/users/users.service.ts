@@ -33,7 +33,7 @@ export class UsersService {
 
   async getByResetToken(token: string) {
     return db.query.users.findFirst({
-      where: eq(users.verificationToken, token),
+      where: eq(users.resetToken, token),
     });
   }
 
