@@ -5,7 +5,7 @@ import { UsersService } from 'src/users/users.service';
 
 @ApiTags('Admin')
 @ApiBearerAuth()
-@Roles('admin')
+@Roles('ADMIN')
 @Controller('admin')
 export class AdminController {
   constructor(private userService: UsersService) {}

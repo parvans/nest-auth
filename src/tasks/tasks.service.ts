@@ -24,6 +24,16 @@ export class TasksService {
     return task;
   }
 
+  async taskById(id: string) {
+    const taskData = await db.query.tasks.findFirst({
+      where: eq(tasks.id, id),
+    });
+
+    if (!taskData) throw new NotFoundException(`Task not found`);
+
+    return taskData;
+  }
+
   async updateTask(id: string, userId: string, data: Partial<CreateTaskDto>) {
     const task = await db.query.tasks.findFirst({
       where: eq(tasks.id, id),

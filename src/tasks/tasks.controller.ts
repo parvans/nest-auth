@@ -22,6 +22,13 @@ export class TasksController {
   findAll(@CurrentUser() user: User) {
     return this.tasksService.findAllForUser(user.id);
   }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get task details by id' })
+  getTask(@Param('id') id: string) {
+    return this.tasksService.taskById(id);
+  }
+
   @Post()
   @ApiOperation({ summary: 'Create new task' })
   create(@CurrentUser() user: User, @Body() dto: CreateTaskDto) {

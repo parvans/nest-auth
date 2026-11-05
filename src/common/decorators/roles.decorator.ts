@@ -1,6 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
 
-export type Role = 'user' | 'admin';
+export type Role = 'USER' | 'ADMIN';
 
 export const ROLES_KEY = 'roles';
 

@@ -8,8 +8,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { RolesGuard } from './common/guards/roles.guard';
 import { TasksModule } from './tasks/tasks.module';
 import { AdminModule } from './admin/admin.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 20, // 20 req per 60 sec per IP address
+
+      }
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       expandVariables: true,
@@ -21,6 +29,7 @@ import { AdminModule } from './admin/admin.module';
     AdminModule,
   ],
   providers: [
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
   ],
